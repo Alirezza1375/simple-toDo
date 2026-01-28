@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function Text(props) {
+export default function Text({ size, color, children }) {
   const getSize = () => {
-    switch (props.size) {
+    switch (size) {
       case "small":
         return 14;
       case "medium":
@@ -17,19 +17,19 @@ export default function Text(props) {
   };
 
   const getColor = () => {
-    switch (props.color) {
+    switch (color) {
       case "primary":
         return "#cfcfca";
       case "secondary":
         return "#172b4d";
       default:
-        return props.color;
+        return color;
     }
   };
 
   return (
-    <span style={{ fontSize: `${getSize()}px`, color: getColor() }}>
-      {props.children}
+    <span style={{ color: getColor(), fontSize: `${getSize()}px` }}>
+      {children}
     </span>
   );
 }
