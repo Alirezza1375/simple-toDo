@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Text({ size, color, children }) {
+export default function Text({ color, size, children }) {
   const getSize = () => {
     switch (size) {
       case "small":

@@ -1,13 +1,13 @@
 import { useState } from "react";
-import Button from "../kits/Button";
-import Input from "../kits/Input";
-import Text from "../kits/Text";
-import TodoCardItem from "./TodoCardItem";
+import Button from "./Button";
+import Input from "./Input";
+import Text from "./Text";
+import Cards from "./Cards";
 
 export default function TodoList({
   todoList,
   handleAddCard,
-  handleDelete,
+  handleDeleteCard,
   handleOpenDialog,
 }) {
   const [inputValue, setInputValue] = useState("");
@@ -16,7 +16,7 @@ export default function TodoList({
     setInputValue(e.target.value);
   };
 
-  const handleAddTodoCard = () => {
+  const handleAddCardToList = () => {
     if (!inputValue) {
       alert("No card added!");
     } else {
@@ -25,26 +25,24 @@ export default function TodoList({
     }
   };
 
-  const handleDeleteCard = (id) => {
-    handleDelete(todoList.id, id);
-  };
-
-  console.log("value", inputValue);
-
   return (
-    <div className="bg-gray-800 p-2 m-2 max-w-xs ">
-      <div className="flex justify-between items-center p-2 m-1">
+    <div className="bg-gray-800 p-2 max-w-xs">
+      <div className="flex justify-between items-center mb-2">
         <Text color="primary" size="huge">
           {todoList.title}
         </Text>
         <Button>...</Button>
       </div>
       <div>
-        {todoList.todoCards?.map((item) => {
+        {todoList.cardItems?.map((item) => {
           return (
-            <TodoCardItem key={item.id} onClick={handleOpenDialog}>
+            <Cards
+              key={item.id}
+              delOnClick={() => handleDeleteCard(todoList.id, item.id)}
+              forwOnClick={() => handleOpenDialog(todoList.id, item)}
+            >
               {item.title}
-            </TodoCardItem>
+            </Cards>
           );
         })}
       </div>
@@ -53,9 +51,9 @@ export default function TodoList({
           value={inputValue}
           onChange={handleInputChange}
           placeholder="Add card..."
-          className="mr-1"
+          className="mr-2"
         />
-        <Button onClick={handleAddTodoCard}>+</Button>
+        <Button onClick={handleAddCardToList}>+</Button>
       </div>
     </div>
   );
